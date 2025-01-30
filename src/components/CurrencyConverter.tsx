@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Input, Select, Card, Spin } from 'antd';
-import { ArrowDown, DollarSign } from 'lucide-react';
+import { ArrowRight } from 'lucide-react';
 import { Rate } from '../types/types';
 const { Option } = Select;
 
@@ -50,46 +50,45 @@ const CurrencyConverter = ({
       {!rates && <div>error loading rates...</div>}
 
       <div>
-        <h2 className="section-title">
-          <DollarSign className="icon" />
-          Currency Converter
-        </h2>
+        <h2 className="section-title">Currency Converter</h2>
 
-        <div>
-          <div className="input-group">
-            <label className="input-label">
-              Amount ({isReversed ? selectedCurrency : 'CZK'})
-            </label>
-            <Input
-              type="number"
-              placeholder={`Enter amount in ${isReversed ? selectedCurrency : 'CZK'}`}
-              value={amount}
-              onChange={(e) => setAmount(e.target.value)}
-              className="currency-input"
-              disabled={isLoading}
-            />
-          </div>
-
-          <div className="arrow-container">
-            <div className="arrow-circle" onClick={handleReverseClick}>
-              <ArrowDown className="icon" />
+        <div className="converter-container">
+          <div className="inputs-row">
+            <div className="input-group">
+              <label className="input-label">
+                Amount ({isReversed ? selectedCurrency : 'CZK'})
+              </label>
+              <Input
+                type="number"
+                placeholder={`Enter amount in ${isReversed ? selectedCurrency : 'CZK'}`}
+                value={amount}
+                onChange={(e) => setAmount(e.target.value)}
+                className="currency-input"
+                disabled={isLoading}
+              />
             </div>
-          </div>
 
-          <div className="input-group">
-            <label className="input-label">Convert to</label>
-            <Select
-              value={selectedCurrency}
-              onChange={onCurrencyChange}
-              disabled={isLoading}
-              className="currency-input"
-            >
-              {Object.entries(rates || {}).map(([code, rate]) => (
-                <Option key={code} value={code}>
-                  {code} - {rate.country} {rate.currency}
-                </Option>
-              ))}
-            </Select>
+            <div className="arrow-container">
+              <div className="arrow-circle" onClick={handleReverseClick}>
+                <ArrowRight className="icon" />
+              </div>
+            </div>
+
+            <div className="input-group">
+              <label className="input-label">Convert to</label>
+              <Select
+                value={selectedCurrency}
+                onChange={onCurrencyChange}
+                disabled={isLoading}
+                className="currency-input"
+              >
+                {Object.entries(rates || {}).map(([code, rate]) => (
+                  <Option key={code} value={code}>
+                    {code} - {rate.country} {rate.currency}
+                  </Option>
+                ))}
+              </Select>
+            </div>
           </div>
 
           <Card className="result-card">

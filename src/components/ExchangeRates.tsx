@@ -1,26 +1,25 @@
 import { Card } from 'antd';
-import { RefreshCcw, TrendingUp, CurrencyIcon } from 'lucide-react';
+import { RefreshCcw, BadgeCent } from 'lucide-react';
 import { Rates } from '../types/types';
 
 interface ExchangeRatesProps {
   rates: Rates;
   isLoading: boolean;
   onCurrencySelect: (currency: string) => void;
+  activeCurrency?: string;
 }
 
 const ExchangeRates = ({
   rates,
   isLoading,
   onCurrencySelect,
+  activeCurrency,
 }: ExchangeRatesProps) => {
   return (
     <>
       {!rates && <div>error...</div>}
       <div>
-        <h2 className="section-title">
-          <TrendingUp className="icon" />
-          Exchange Rates
-        </h2>
+        <h2 className="section-title">Exchange Rates</h2>
         <div className="rate-list">
           {isLoading ? (
             <div className="loading">
@@ -31,12 +30,12 @@ const ExchangeRates = ({
             Object.entries(rates).map(([code, rate]) => (
               <Card
                 key={code}
-                className="rate-card"
+                className={`rate-card ${code === activeCurrency ? 'active' : ''}`}
                 onClick={() => onCurrencySelect(code)}
               >
                 <div className="rate-content">
                   <div className="currency-code">
-                    <CurrencyIcon className="icon" size={20} />
+                    <BadgeCent className="icon" size={20} />
                     {code}
                   </div>
                   <div className="rate-value">{rate.rate.toFixed(3)} CZK</div>
@@ -46,10 +45,6 @@ const ExchangeRates = ({
           ) : (
             <div>No rates available</div>
           )}
-        </div>
-        <div className="update-note">
-          <RefreshCcw size={12} className="icon" />
-          Rates are updated every minute
         </div>
       </div>
     </>

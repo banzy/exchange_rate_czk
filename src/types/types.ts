@@ -7,3 +7,8 @@ export interface Rate {
 }
 
 export type Rates = { [key: string]: Rate } | null;
+
+export interface ExchangeRatesData {
+  date: string;
+  rates: Rates;
+}
