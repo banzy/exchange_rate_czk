@@ -46,7 +46,7 @@ const Dashboard = () => {
         <header className="header">
           <h1 className="header-title">Currency Exchange</h1>
           <p className="header-subtitle">
-            Fast and reliable currency conversion form the Czech National Bank
+            Fast and reliable currency conversion from the Czech National Bank
           </p>
         </header>
 
