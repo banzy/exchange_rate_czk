@@ -36,7 +36,7 @@ const ExchangeRates = ({
                 <div className="rate-content">
                   <div className="currency-code">
                     <BadgeCent className="icon" size={20} />
-                    {code}
+                    {rate.amount !== 1 ? `${code} (${rate.amount})` : code}
                   </div>
                   <div className="rate-value">{rate.rate.toFixed(3)} CZK</div>
                 </div>

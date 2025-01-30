@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Input, Select, Card, Spin, Switch } from 'antd';
 import { ArrowRight } from 'lucide-react';
+import { NumericFormat } from 'react-number-format';
 import { Rate } from '../types/types';
 const { Option } = Select;
 
@@ -102,7 +103,14 @@ const CurrencyConverter = ({
               {isLoading ? (
                 <Spin className="loading" />
               ) : convertedAmount ? (
-                `${convertedAmount.toFixed(2)} ${isReversed ? 'CZK' : selectedCurrency}`
+                <NumericFormat
+                  value={convertedAmount}
+                  displayType="text"
+                  thousandSeparator={true}
+                  decimalScale={2}
+                  fixedDecimalScale={true}
+                  suffix={` ${isReversed ? 'CZK' : selectedCurrency}`}
+                />
               ) : (
                 '0.00'
               )}
