@@ -1,5 +1,3 @@
-import { Rate } from '../types/types';
-
 interface ParsedData {
   date: string;
   rates: any;
