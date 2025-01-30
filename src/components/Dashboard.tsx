@@ -3,15 +3,16 @@ import CurrencyConverter from './CurrencyConverter';
 import ExchangeRates from './ExchangeRates';
 import useToast from '../hooks/useToast';
 import '../styles/currency.scss';
+import useExchangeRates from '../hooks/useExchangeRates';
 
 export interface Rate {
   currency: string;
   rate: number;
 }
 
-const Index = () => {
+const Dashboard = () => {
+  const { data, isLoading, error } = useExchangeRates();
   const [rates, setRates] = useState<Rate[]>([]);
-  const [isLoading, setIsLoading] = useState(true);
   const [selectedCurrency, setSelectedCurrency] = useState<string>('EUR');
   const { showToast } = useToast();
 
@@ -37,8 +38,6 @@ const Index = () => {
       } catch (error) {
         console.error('Error fetching rates:', error);
         showToast('Failed to fetch exchange rates', 'error');
-      } finally {
-        setIsLoading(false);
       }
     };
 
@@ -49,6 +48,11 @@ const Index = () => {
     console.log('Currency selected:', currency);
     setSelectedCurrency(currency);
   };
+
+  if (isLoading) return <div>Loading...</div>;
+  if (error) return <div>Error: {error.message}</div>;
+
+  console.log('Fetched rates:', data);
 
   return (
     <div className="container">
@@ -78,4 +82,4 @@ const Index = () => {
   );
 };
 
-export default Index;
+export default Dashboard;
