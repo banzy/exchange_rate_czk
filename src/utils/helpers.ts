@@ -11,7 +11,7 @@ interface ParsedData {
   rates: ExchangeRate[];
 }
 
-export default function parseExchangeRates(data: string): ParsedData {
+export function parseExchangeRates(data: string): ParsedData {
   // trusting the data is well formatted form the source
   const lines = data.trim().split('\n');
   const date = lines[0].split('#')[0].trim();
