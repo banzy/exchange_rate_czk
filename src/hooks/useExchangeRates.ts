@@ -1,23 +1,15 @@
 import { useQuery } from '@tanstack/react-query';
 import axios, { AxiosError } from 'axios';
 import { parseExchangeRates } from '../utils/helpers';
-
+import { Rates } from '../types/types';
 const URL_RATES_SOURCE =
   'https://www.cnb.cz/en/financial-markets/foreign-exchange-market/central-bank-exchange-rate-fixing/central-bank-exchange-rate-fixing/daily.txt';
 
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
-export interface Rate {
-  Country: string;
-  Currency: string;
-  Amount: string;
-  Code: string;
-  Rate: string;
-}
-
 interface ExchangeRatesData {
   date: string;
-  rates: Rate[];
+  rates: Rates;
 }
 
 const fetchRates = async (): Promise<ExchangeRatesData> => {
@@ -29,7 +21,7 @@ const fetchRates = async (): Promise<ExchangeRatesData> => {
       },
     }
   );
-  return parseExchangeRates(response.data);
+  return parseExchangeRates(response.data) || { date: '', rates: null };
 };
 
 const useExchangeRates = () => {

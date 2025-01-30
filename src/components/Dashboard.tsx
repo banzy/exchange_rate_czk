@@ -4,45 +4,24 @@ import ExchangeRates from './ExchangeRates';
 import useToast from '../hooks/useToast';
 import '../styles/currency.scss';
 import useExchangeRates from '../hooks/useExchangeRates';
-
-export interface Rate {
-  currency: string;
-  rate: number;
-}
+import { Rates } from '../types/types';
 
 const Dashboard = () => {
   const { data, isLoading, error } = useExchangeRates();
-  const [rates, setRates] = useState<Rate[]>([]);
-  const [selectedCurrency, setSelectedCurrency] = useState<string>('EUR');
+  const [rates, setRates] = useState<Rates>();
+  const [selectedCurrency, setSelectedCurrency] = useState<string>('USD');
   const { showToast } = useToast();
 
   useEffect(() => {
-    const fetchRates = async () => {
-      try {
-        const sampleRates: Rate[] = [
-          { currency: 'EUR', rate: 24.52 },
-          { currency: 'USD', rate: 22.61 },
-          { currency: 'GBP', rate: 28.65 },
-          { currency: 'JPY', rate: 0.152 },
-          { currency: 'CHF', rate: 25.83 },
-          { currency: 'AUD', rate: 14.72 },
-        ];
-
-        setRates(sampleRates);
-        console.log('Fetched rates:', sampleRates);
-
-        showToast(
-          'Exchange rates updated: Latest rates have been fetched successfully',
-          'success'
-        );
-      } catch (error) {
-        console.error('Error fetching rates:', error);
-        showToast('Failed to fetch exchange rates', 'error');
-      }
-    };
-
-    fetchRates();
-  }, []);
+    if (data?.rates) {
+      setRates(data.rates);
+      console.log('Fetched rates:', data.rates);
+      showToast(
+        'Exchange rates updated: Latest rates have been fetched successfully',
+        'success'
+      );
+    }
+  }, [data]);
 
   const handleCurrencySelect = (currency: string) => {
     console.log('Currency selected:', currency);
@@ -66,13 +45,13 @@ const Dashboard = () => {
 
         <div className="grid-layout">
           <CurrencyConverter
-            rates={rates}
+            rates={rates || null}
             isLoading={isLoading}
             selectedCurrency={selectedCurrency}
             onCurrencyChange={handleCurrencySelect}
           />
           <ExchangeRates
-            rates={rates}
+            rates={rates || null}
             isLoading={isLoading}
             onCurrencySelect={handleCurrencySelect}
           />
