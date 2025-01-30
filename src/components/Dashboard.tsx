@@ -18,6 +18,7 @@ const Dashboard = () => {
   useEffect(() => {
     if (data?.rates) {
       setRates(data.rates);
+      console.log('Fetched rates:', data);
     }
   }, [data]);
 
@@ -37,8 +38,6 @@ const Dashboard = () => {
   };
 
   if (error) return <div>Error: {error.message}</div>;
-
-  console.log('Fetched rates:', data);
 
   return (
     <div className="container">

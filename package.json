@@ -30,6 +30,7 @@
     "env-cmd": "^10.1.0",
     "postcss": "^8.5.1",
     "prettier": "^3.4.2",
+    "react-test-renderer": "^19.0.0",
     "sass": "^1.83.4"
   },
   "scripts": {
@@ -54,6 +55,12 @@
       "last 1 chrome version",
       "last 1 firefox version",
       "last 1 safari version"
+    ]
+  },
+  "type": "module",
+  "jest": {
+    "transformIgnorePatterns": [
+      "/node_modules/(?!(lucide-react|axios)/)"
     ]
   }
 }

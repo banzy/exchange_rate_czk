@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
 import { Input, Select, Card, Spin, Switch } from 'antd';
-import { ArrowRight } from 'lucide-react';
 import { NumericFormat } from 'react-number-format';
 import { Rate } from '../types/types';
 const { Option } = Select;
