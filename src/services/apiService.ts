@@ -8,13 +8,18 @@ const URL_RATES_SOURCE =
 const CORS_PROXY = 'https://api.allorigins.win/raw?url=';
 
 export const fetchRates = async (): Promise<ExchangeRatesData> => {
-  const response = await axios.get<string>(
-    `${CORS_PROXY}${encodeURIComponent(URL_RATES_SOURCE)}`,
-    {
-      headers: {
-        Accept: 'text/plain',
-      },
-    }
-  );
-  return parseExchangeRates(response.data) || { date: '', rates: null };
+  try {
+    const response = await axios.get<string>(
+      `${CORS_PROXY}${encodeURIComponent(URL_RATES_SOURCE)}`,
+      {
+        headers: {
+          Accept: 'text/plain',
+        },
+      }
+    );
+    return parseExchangeRates(response.data) || { date: '', rates: null };
+  } catch (error) {
+    console.error('Error fetching exchange rates:', error);
+    throw error;
+  }
 };
